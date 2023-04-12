@@ -10,6 +10,7 @@ type User = {
   name: string
   email: string
   password: string
+  confirmPassword: string
   newPassword?: string | null
   confirmNewPassword?: string | null
 }
