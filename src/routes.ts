@@ -4,7 +4,7 @@ import { deleteUser, detailUser, login, registerUser, updateUser } from './contr
 import { validateAuthentication } from './middlewares/validateAuthentication'
 import { validateRequest } from './middlewares/validateRequest'
 import { schemaRegisterUser, schemaUpdateUser, schemaUserLogin } from './schemas/user'
-import { getMovie, listMovies } from './controllers/movies'
+import { getMovie, highlightMovie, listMovies } from './controllers/movies'
 
 const routes = Router()
 
@@ -19,6 +19,8 @@ routes.delete('/user', deleteUser)
 
 routes.get('/movies', listMovies)
 routes.get('/movies/:id', getMovie)
+
+routes.get('/highlight', highlightMovie)
 
 routes.post('/favorites', addFavorites)
 routes.get('/favorites', listFavorites)
