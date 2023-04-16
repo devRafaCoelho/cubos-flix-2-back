@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { addFavorites, deleteMovie, detailMovie, listFavorites } from './controllers/favorites'
+import { addFavorites, deleteFavorites, detailMovie, listFavorites } from './controllers/favorites'
+import { findMovie, getMovie, highlightMovie, listMovies } from './controllers/movies'
 import { deleteUser, detailUser, login, registerUser, updateUser } from './controllers/user'
 import { validateAuthentication } from './middlewares/validateAuthentication'
 import { validateRequest } from './middlewares/validateRequest'
 import { schemaRegisterUser, schemaUpdateUser, schemaUserLogin } from './schemas/user'
-import { getMovie, highlightMovie, listMovies } from './controllers/movies'
 
 const routes = Router()
 
@@ -21,10 +21,11 @@ routes.get('/movies', listMovies)
 routes.get('/movies/:id', getMovie)
 
 routes.get('/highlight', highlightMovie)
+routes.get('/find-movie', findMovie)
 
 routes.post('/favorites', addFavorites)
 routes.get('/favorites', listFavorites)
 routes.get('/favorites/:id', detailMovie)
-routes.delete('/favorites/:id', deleteMovie)
+routes.delete('/favorites/:id', deleteFavorites)
 
 export default routes
