@@ -9,7 +9,7 @@ export const addFavorites = async (req: Request, res: Response) => {
 
   try {
     const isFavorite = await prisma.favorites.findUnique({ where: { movie_id } })
-    if (isFavorite) return res.status(400).json({ error: { email: 'Filme já favoritado!' } })
+    if (isFavorite) return res.status(400).json({ error: { movie_id: 'Filme já favoritado!' } })
 
     const data = {
       movie_id,
@@ -52,17 +52,17 @@ export const detailMovie = async (req: Request, res: Response) => {
   const { id } = req.params
 
   try {
-    const movie = await prisma.favorites.findUnique({
+    const isFavorite = await prisma.favorites.findUnique({
       where: {
-        id: Number(id)
+        movie_id: id
       }
     })
 
-    if (!movie) {
+    if (!isFavorite) {
       return res.status(404).json({ message: 'Filme não encontrado' })
     }
 
-    return res.status(200).json(movie)
+    return res.status(200).json(isFavorite)
   } catch {
     return res.status(500).json({ message: 'Erro interno do servidor' })
   }
@@ -74,7 +74,7 @@ export const deleteFavorites = async (req: Request, res: Response) => {
   try {
     const isFavorite = await prisma.favorites.findUnique({
       where: {
-        id: Number(id)
+        movie_id: id
       }
     })
 
@@ -84,7 +84,7 @@ export const deleteFavorites = async (req: Request, res: Response) => {
 
     await prisma.favorites.delete({
       where: {
-        id: Number(id)
+        movie_id: id
       }
     })
 

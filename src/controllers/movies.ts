@@ -26,7 +26,18 @@ export const getMovie = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Filme não encontrado' })
     }
 
-    return res.status(200).json(response.data)
+    const video = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.API_KEY}`
+    )
+    const officialTrailerIndex = video.data.results.length > 1 ? video.data.results.length - 1 : 0
+
+    const linkVideo = `https://www.youtube.com/watch?v=${video.data.results[officialTrailerIndex].key}`
+
+    const movieData = {
+      ...response.data,
+      linkVideo
+    }
+    return res.status(200).json(movieData)
   } catch {
     return res.status(500).json({ message: 'Erro interno do servidor' })
   }
